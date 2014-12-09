@@ -1,5 +1,6 @@
 # Metadata for eclipse
 .metadata/
+.metadata/*
 
 *.class
 
