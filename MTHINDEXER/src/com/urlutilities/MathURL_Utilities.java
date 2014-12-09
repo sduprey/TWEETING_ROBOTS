@@ -9,6 +9,7 @@ public class MathURL_Utilities {
 
 	public static DeathBirthInfo parseBirthDeathInformation(String birthTextToParse, String deathTextToParse){
 		DeathBirthInfo deathbirthInfo = new DeathBirthInfo();
+		if (!((birthTextToParse.contains("BC")||deathTextToParse.contains("BC")))){
 		String[] birthPieces = birthTextToParse.split(" |,");
 		if (birthPieces.length > 3){
 			int daynumber = Integer.valueOf(birthPieces[0]);
@@ -50,6 +51,7 @@ public class MathURL_Utilities {
 				}
 			}
 			deathbirthInfo.setDeathLocation(deathLocation.toString());	
+		}
 		}
 		return deathbirthInfo;
 	}

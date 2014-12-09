@@ -15,7 +15,7 @@ public class ContinuousController {
 		// general seed
 		String seed = "http://www-history.mcs.st-and.ac.uk/";	
 		// localized seed for debugging
-		//////String seed = "http://www-history.mcs.st-andrews.ac.uk/Biographies/Turing.html";
+	    //String seed = "http://www-history.mcs.st-andrews.ac.uk/Biographies/Turing.html";
 		// downsizing to test
 		int numberOfCrawlers =  1;	
 		//int numberOfCrawlers =  250;
@@ -29,15 +29,13 @@ public class ContinuousController {
 		CrawlConfig config = new CrawlConfig();
 		config.setCrawlStorageFolder(rootFolder);
 		config.setUserAgentString(user_agent_name);
-		// Politeness delay : none by default
-		config.setPolitenessDelay(100);
 		// Unlimited number of pages can be crawled.
 		config.setMaxPagesToFetch(-1);
 		// we crawl up to depth n
 		config.setMaxDepthOfCrawling(maxDepthOfCrawling);
 		// we want the crawl not to be reconfigurable : too slow otherwise
 		config.setResumableCrawling(false);
-		config.setPolitenessDelay(100);
+		config.setPolitenessDelay(1000);
 		PageFetcher pageFetcher = new PageFetcher(config);
 		RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
 		robotstxtConfig.setUserAgentName(user_agent_name);

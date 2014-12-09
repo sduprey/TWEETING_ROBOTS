@@ -12,11 +12,10 @@ import com.urlutilities.MathURL_Utilities;
 public class ParsingTest {
 	public static void main(String[] args){
 
-		//String my_url_to_fetch = "http://www.cdiscount.com/electromenager/tous-nos-accessoires/joint-hublot-d-30-30-cm/f-11029-ind3662734065501.html#mpos=2|mp";
-		//String my_url_to_fetch = "http://www.cdiscount.com/le-sport/vetements-de-sport/kappa-survetement-armor-homme/f-121020526-3025ej0005.html#mpos=1|cd";
-		//String my_url_to_fetch = "http://www.cdiscount.com/animalerie/chiens/lot-de-3-sofas-pour-chien/f-1621004-ifd19945rouge.html";
-		String my_url_to_fetch ="http://www-history.mcs.st-andrews.ac.uk/Biographies/Turing.html";
-
+//		String my_url_to_fetch ="http://www-history.mcs.st-andrews.ac.uk/Biographies/Turing.html";		
+		String my_url_to_fetch ="http://www-history.mcs.st-andrews.ac.uk/Biographies/Al-Karaji.html";
+		//String my_url_to_fetch ="http://www-history.mcs.st-and.ac.uk/Biographies/Archimedes.html";
+		
 		// fetching data using jQuery
 		org.jsoup.nodes.Document doc;
 		try{
@@ -38,6 +37,7 @@ public class ParsingTest {
 				Element deathElement = fontElements.get(1);
 				String deathText = deathElement.text();
 				DeathBirthInfo birthInfo = MathURL_Utilities.parseBirthDeathInformation(birthText,deathText);
+				System.out.println(birthInfo);
 			}
 			
 

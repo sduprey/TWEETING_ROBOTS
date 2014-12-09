@@ -19,7 +19,7 @@ import edu.uci.ics.crawler4j.url.WebURL;
 
 public class ContinuousCrawler extends WebCrawler {
 	// size of the local data cache
-	private static int bulk_size = 200;
+	private static int bulk_size = 100;
 
 	private static String mathematician_biography= "http://www-history.mcs.st-andrews.ac.uk/Biographies/";
 	private static String whole_site ="http://www-history.mcs.st-and.ac.uk/";
@@ -56,10 +56,20 @@ public class ContinuousCrawler extends WebCrawler {
 
 			if (page.getParseData() instanceof HtmlParseData) {
 				HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
-				info.setText(htmlParseData.getText());
+
 				String html = htmlParseData.getHtml();
 				// parsing here our html to get the content we wish to have
 				org.jsoup.nodes.Document doc =  Jsoup.parse(html);
+				Elements topoel = doc.select("p");
+				
+			
+				StringBuilder textBuilder = new StringBuilder();
+				for (Element paraph : topoel){
+					Elements texParaph = paraph.getElementsByAttribute("align");
+					textBuilder.append(texParaph.text());
+				}
+				info.setText(textBuilder.toString());
+				System.out.println(textBuilder.toString());
 				Elements dates = doc.select("h3");
 				if (dates.size() == 1){
 					Element date = dates.get(0);
