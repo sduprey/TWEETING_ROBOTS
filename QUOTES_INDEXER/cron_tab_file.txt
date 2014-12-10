@@ -1,0 +1,11 @@
+
+sudo crontab -l  # ======> to list the root crontab
+
+sudo crontab -e  # ======> to edit the root crontab
+
+# the current lines
+
+
+00 10 * * * sudo /usr/bin/php /var/www/html/cron.php 1>/home/sduprey/My_Data/My_Serposcope_Cron_Logs/serposcope.log 2>&1
+# we launch it every day at eigth am
+00 08 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_quote_twitter.jar
