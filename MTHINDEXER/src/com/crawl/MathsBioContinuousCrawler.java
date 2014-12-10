@@ -27,10 +27,10 @@ public class MathsBioContinuousCrawler extends WebCrawler {
 	Pattern filters = Pattern.compile(".*(\\.(css|js|bmp|gif|jpeg" + "|png|tiff?|mid|mp2|mp3|mp4"
 			+ "|wav|avi|mov|mpeg|ram|m4v|ico|spdf" + "|rm|smil|wmv|swf|wma|zip|rar|gz))$");
 
-	CrawlDataManagement myCrawlDataManager;
+	MathsBioCrawlDataManagement myCrawlDataManager;
 
 	public MathsBioContinuousCrawler() {
-		myCrawlDataManager = new CrawlDataManagement();
+		myCrawlDataManager = new MathsBioCrawlDataManagement();
 	}
 
 	@Override
@@ -62,8 +62,8 @@ public class MathsBioContinuousCrawler extends WebCrawler {
 				// parsing here our html to get the content we wish to have
 				org.jsoup.nodes.Document doc =  Jsoup.parse(html);
 				Elements topoel = doc.select("p");
-				
-			
+
+
 				StringBuilder textBuilder = new StringBuilder();
 				for (Element paraph : topoel){
 					Elements texParaph = paraph.getElementsByAttribute("align");
@@ -111,7 +111,8 @@ public class MathsBioContinuousCrawler extends WebCrawler {
 			System.out.println("The cache has now  : "+counter + " elements ");
 			System.out.println("The cache has now  : "+myCrawlDataManager.getTotalProcessedPages() + " elements ");
 			// We save this crawler data after processing every bulk_sizes pages
-			if (myCrawlDataManager.getTotalProcessedPages() % bulk_size == 0) {
+
+			if ((myCrawlDataManager.getTotalProcessedPages() != 0 ) && (myCrawlDataManager.getTotalProcessedPages() % bulk_size == 0)) {
 				saveData();
 			}
 		}

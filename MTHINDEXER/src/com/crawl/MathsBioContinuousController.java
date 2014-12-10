@@ -54,7 +54,7 @@ public class MathsBioContinuousController {
 		long totalTextSize = 0;
 		int totalProcessedPages = 0;
 		for (Object localData : crawlersLocalData) {
-			CrawlDataManagement stat = (CrawlDataManagement) localData;
+			MathsBioCrawlDataManagement stat = (MathsBioCrawlDataManagement) localData;
 			totalLinks += stat.getTotalLinks();
 			totalTextSize += stat.getTotalTextSize();
 			totalProcessedPages += stat.getTotalProcessedPages();

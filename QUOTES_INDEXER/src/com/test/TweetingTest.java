@@ -9,11 +9,12 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
-
+//david.hilbert.de@gmail.com @davidhilbert_de
+//wise.man.quoting@gmail.com @wiseman_quoting
 public class TweetingTest {
 	public static void main(String[] args) {
 		//String toUpdate = "I am a wise man and I'll distill to you my knowledge, day by day.";
-		String toUpdate = "The question is,“ said Humpty Dumpty, „which is to be master  that's all. “Lewis Carroll„";
+		String toUpdate = "\"The question is, said Humpty Dumpty, which is to be master  that's all.\"Lewis Carroll";
 
 		if (args.length < 1) {
 			System.out.println("Usage: java twitter4j.examples.tweets.UpdateStatus [text]");

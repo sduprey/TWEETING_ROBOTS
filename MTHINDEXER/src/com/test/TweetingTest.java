@@ -9,7 +9,8 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
-
+//david.hilbert.de@gmail.com @davidhilbert_de
+//wise.man.quoting@gmail.com @wiseman_quoting
 public class TweetingTest {
 	public static void main(String[] args) {
 		String toUpdate = "That may seem strange, but I am the very first great worldwide known mathematician to open a twitter account";

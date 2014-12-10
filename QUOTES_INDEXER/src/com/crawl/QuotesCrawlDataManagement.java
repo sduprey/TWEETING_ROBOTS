@@ -4,22 +4,23 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-public class CrawlDataManagement {
+public class QuotesCrawlDataManagement {
 
+	private static int twitter_threshold=140;
 	private int totalProcessedPages;
 	private long totalLinks;
 	private long totalTextSize;
 	//private HttpSolrServer solr_server;
 	private Connection con;
 
-	private List<QuoteInfo> crawledContent = new ArrayList<QuoteInfo>();
-	private static String insert_statement="INSERT INTO QUOTES(QUOTE,AUTHOR)"
-			+ " VALUES(?,?)";
+	private Set<QuoteInfo> crawledContent = new HashSet<QuoteInfo>();
+	private static String insert_statement="INSERT INTO QUOTES(QUOTE_AUTHOR)"
+			+ " VALUES(?)";
 
-	public CrawlDataManagement() {
+	public QuotesCrawlDataManagement() {
 		//		Properties props = new Properties();
 		//		FileInputStream in = null;      
 		//		try {
@@ -93,38 +94,49 @@ public class CrawlDataManagement {
 	}
 
 	public void saveData(){
-		try{
-			int local_counter = 0;
-			con.setAutoCommit(false);
-			PreparedStatement st = con.prepareStatement(insert_statement);
-			for (QuoteInfo info : crawledContent)	{	
+		//try{
+		int local_counter = 0;
+		//con.setAutoCommit(false);
+		//PreparedStatement st = con.prepareStatement(insert_statement);
+		for (QuoteInfo info : crawledContent)	{	
+			String to_insert="\""+info.getText()+"\""+info.getName();
+			if (to_insert.length()<= twitter_threshold){
 				local_counter++;
-				st.setString(1,info.getText());
-				st.setString(2,info.getName());
-				st.addBatch();
-			}	
-			st.executeBatch();		 
-			con.commit();
-			System.out.println(Thread.currentThread()+"Committed " + local_counter + " updates");
-		} catch (SQLException e){
-			//System.out.println("Line already inserted : "+nb_lines);
-			e.printStackTrace();  
-			if (con != null) {
-				try {
-					con.rollback();
-				} catch (SQLException ex1) {
-					ex1.printStackTrace();
+				try{
+					PreparedStatement st = con.prepareStatement(insert_statement);
+					st.setString(1,to_insert);
+					//st.addBatch();
+					st.executeUpdate();
+					st.close();
 				}
+				catch (SQLException e){
+					//System.out.println("Line already inserted : "+nb_lines);
+					e.printStackTrace();  
+				}	
 			}
 		}	
+		//st.executeBatch();		 
+		//con.commit();
+		System.out.println(Thread.currentThread()+"Committed " + local_counter + " updates");
+		//		} catch (SQLException e){
+		//			//System.out.println("Line already inserted : "+nb_lines);
+		//			e.printStackTrace();  
+		//			if (con != null) {
+		//				try {
+		//					con.rollback();
+		//				} catch (SQLException ex1) {
+		//					ex1.printStackTrace();
+		//				}
+		//			}
+		//		}	
 		crawledContent.clear();
 	}
 
-	public List<QuoteInfo> getCrawledContent() {
+	public Set<QuoteInfo> getCrawledContent() {
 		return crawledContent;
 	}
 
-	public void setCrawledContent(List<QuoteInfo> crawledContent) {
+	public void setCrawledContent(Set<QuoteInfo> crawledContent) {
 		this.crawledContent = crawledContent;
 	}
 

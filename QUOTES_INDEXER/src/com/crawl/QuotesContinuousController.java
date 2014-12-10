@@ -52,7 +52,7 @@ public class QuotesContinuousController {
 		long totalTextSize = 0;
 		int totalProcessedPages = 0;
 		for (Object localData : crawlersLocalData) {
-			CrawlDataManagement stat = (CrawlDataManagement) localData;
+			QuotesCrawlDataManagement stat = (QuotesCrawlDataManagement) localData;
 			totalLinks += stat.getTotalLinks();
 			totalTextSize += stat.getTotalTextSize();
 			totalProcessedPages += stat.getTotalProcessedPages();

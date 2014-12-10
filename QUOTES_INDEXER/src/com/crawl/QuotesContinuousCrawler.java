@@ -25,10 +25,10 @@ public class QuotesContinuousCrawler extends WebCrawler {
 	Pattern filters = Pattern.compile(".*(\\.(css|js|bmp|gif|jpeg" + "|png|tiff?|mid|mp2|mp3|mp4"
 			+ "|wav|avi|mov|mpeg|ram|m4v|ico|pdf" + "|rm|smil|wmv|swf|wma|zip|rar|gz))$");
 
-	CrawlDataManagement myCrawlDataManager;
+	QuotesCrawlDataManagement myCrawlDataManager;
 
 	public QuotesContinuousCrawler() {
-		myCrawlDataManager = new CrawlDataManagement();
+		myCrawlDataManager = new QuotesCrawlDataManagement();
 	}
 
 	@Override
@@ -43,15 +43,10 @@ public class QuotesContinuousCrawler extends WebCrawler {
 		System.out.println(url);
 		if (url.startsWith(quotes_author)){
 			System.out.println(Thread.currentThread()+": Visiting URL : "+url);
-
-		    String author = QuoteURL_Utilities.getAuthor(url);
-
-
+			String author = QuoteURL_Utilities.getAuthor(url);
 			List<WebURL> links = null;
-
-			if (page.getParseData() instanceof HtmlParseData) {
+			if ((page.getParseData() instanceof HtmlParseData)&& (author.length() > 1)) {
 				HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
-
 				String html = htmlParseData.getHtml();
 				// parsing here our html to get the content we wish to have
 				org.jsoup.nodes.Document doc =  Jsoup.parse(html);
@@ -60,12 +55,12 @@ public class QuotesContinuousCrawler extends WebCrawler {
 					Elements quotes = paragraph.getElementsByAttribute("itemprop");
 					if (quotes != null){
 						String toAdd = quotes.text();
-
 						if (!"".equals(toAdd)) {			
 							QuoteInfo infoquote = new QuoteInfo();
 							infoquote.setName(author);
 							infoquote.setUrl(url);
 							infoquote.setText(toAdd);
+							System.out.println("Adding to the cache : "+infoquote.getText());
 							myCrawlDataManager.getCrawledContent().add(infoquote);
 							myCrawlDataManager.incProcessedPages();	
 						}
@@ -74,16 +69,15 @@ public class QuotesContinuousCrawler extends WebCrawler {
 				links = htmlParseData.getOutgoingUrls();
 				myCrawlDataManager.incTotalLinks(links.size());
 				myCrawlDataManager.incTotalTextSize(htmlParseData.getText().length());	
-
+				counter++;
+				System.out.println("Adding URL : "+url + " to the cache");
+				System.out.println("The cache has now  : "+counter + " elements ");
+				System.out.println("The cache has now  : "+myCrawlDataManager.getTotalProcessedPages() + " elements ");
 
 			}
-
-			counter++;
-			System.out.println("Adding URL : "+url + " to the cache");
-			System.out.println("The cache has now  : "+counter + " elements ");
-			System.out.println("The cache has now  : "+myCrawlDataManager.getTotalProcessedPages() + " elements ");
 			// We save this crawler data after processing every bulk_sizes pages
-			if (myCrawlDataManager.getTotalProcessedPages() % bulk_size == 0) {
+			if ((myCrawlDataManager.getTotalProcessedPages() != 0 ) && (myCrawlDataManager.getTotalProcessedPages() % bulk_size == 0)) {
+				System.out.println("Saving the cache : ");
 				saveData();
 			}
 		}
@@ -120,5 +114,4 @@ public class QuotesContinuousCrawler extends WebCrawler {
 		System.out.println("Crawler " + id + "> Total Text Size: " + myCrawlDataManager.getTotalTextSize());
 		myCrawlDataManager.saveData();	
 	}
-
 }

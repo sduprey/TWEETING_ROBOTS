@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class CrawlDataManagement {
+public class MathsBioCrawlDataManagement {
 
 	private int totalProcessedPages;
 	private long totalLinks;
@@ -22,7 +22,7 @@ public class CrawlDataManagement {
 			+ "H1,NAME,BIRTH_LOCATION,BIRTH_DATE,DEATH_LOCATION,DEATH_DATE)"
 			+ " VALUES(?,?,?,?,?,?,?,?,?,?)";
 
-	public CrawlDataManagement() {
+	public MathsBioCrawlDataManagement() {
 		//		Properties props = new Properties();
 		//		FileInputStream in = null;      
 		//		try {
@@ -95,55 +95,6 @@ public class CrawlDataManagement {
 		this.totalTextSize += count;
 	}
 
-//	public void updateSolrData() {
-//		try{
-//			Iterator<Entry<String, MathematicianURLinfo>> it = crawledContent.entrySet().iterator();
-//			int local_counter = 0;
-//			if (it.hasNext()){
-//				local_counter++;
-//				do {
-//					local_counter ++;
-//					Map.Entry<String, MathematicianURLinfo> pairs = it.next();
-//					String url=(String)pairs.getKey();
-//					MathematicianURLinfo info = (MathematicianURLinfo)pairs.getValue();
-//					SolrInputDocument doc = new SolrInputDocument();
-//					doc.addField("id",url.replace("http://www-history.mcs.st-andrews.ac.uk/",""));
-//					doc.addField("url",url);
-//					doc.addField("whole_text",info.getText());
-//					doc.addField("title",info.getTitle());
-//					doc.addField("links_size",info.getLinks_size());
-//					doc.addField("links",info.getOut_links());
-//					doc.addField("h1",info.getH1());
-//					doc.addField("short_description",info.getShort_description());
-//					doc.addField("birth_date",info.getBirth_date());
-//					doc.addField("birth_place",info.getBirth_location());
-//					doc.addField("death_date",info.getDeath_date());
-//					doc.addField("death_place",info.getDeath_location());
-//					java.sql.Date sqlDate = new java.sql.Date(System.currentTimeMillis());
-//					doc.addField("last_update", sqlDate.toString());	
-//					try{
-//						solr_server.add(doc);
-//					}catch (Exception e){
-//						System.out.println("Trouble inserting : "+url);
-//						e.printStackTrace();  
-//					}
-//				}while (it.hasNext());	
-//				solr_server.commit();
-//				System.out.println(Thread.currentThread()+"Committed " + local_counter + " updates");
-//			}
-//		} catch (Exception e){
-//			//System.out.println("Line already inserted : "+nb_lines);
-//			e.printStackTrace();  
-//		}
-//	}
-//
-//	// we here perform upsert to keep up to date our crawl referential
-//	public void updateData(){
-//		updateSolrData();
-//		// clear cache
-//		crawledContent.clear();
-//	}
-
 	public void saveData(){
 		try{
 			Iterator<Entry<String, MathematicianURLinfo>> it = crawledContent.entrySet().iterator();
@@ -151,12 +102,13 @@ public class CrawlDataManagement {
 			if (it.hasNext()){
 				local_counter++;
 				//con.setAutoCommit(false);
-				PreparedStatement st = con.prepareStatement(insert_statement);
+				//PreparedStatement st = con.prepareStatement(insert_statement);
 				do {
 					local_counter ++;
 					Map.Entry<String, MathematicianURLinfo> pairs = (Map.Entry<String, MathematicianURLinfo>)it.next();
 					String url=pairs.getKey();
 					MathematicianURLinfo info = pairs.getValue();
+					PreparedStatement st = con.prepareStatement(insert_statement);
 					//					String prepared_string = "("+url+","
 					//					                            +(String)list_values[0]+","
 					//					                            +(String)list_values[1]+","
@@ -186,6 +138,7 @@ public class CrawlDataManagement {
 					st.setString(9,info.getDeath_location());
 					java.sql.Date deathDate = new java.sql.Date(info.getBirth_date().getTime());
 					st.setDate(10,deathDate);
+					st.close();
 					st.executeUpdate();
 					//st.addBatch();
 					System.out.println(Thread.currentThread()+"Committed " + url + " update");
