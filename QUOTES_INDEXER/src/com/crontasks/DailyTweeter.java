@@ -63,14 +63,7 @@ public class DailyTweeter {
 			Date death_date = rs.getDate(10);		
 			result.setUrl(url);
 			result.setName(name);
-			result.setBirth_date(birth_date);
-			result.setBirth_location(birth_location);
-			result.setDeath_date(death_date);
-			result.setDeath_location(death_location);
-			result.setH1(h1);
-			result.setTitle(title);
-			result.setShort_description(short_description);
-			result.setText(whole_text);
+
 			mathematicians_to_tweet.add(result);
 			System.out.println("Putting into cache mathematician  :"+name);
 		}

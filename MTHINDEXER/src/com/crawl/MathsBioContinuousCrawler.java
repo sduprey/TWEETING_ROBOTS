@@ -17,19 +17,19 @@ import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
 
-public class ContinuousCrawler extends WebCrawler {
+public class MathsBioContinuousCrawler extends WebCrawler {
 	// size of the local data cache
-	private static int bulk_size = 100;
+	private static int bulk_size = 10;
 	private static int counter=0;
 
 	private static String mathematician_biography= "http://www-history.mcs.st-and.ac.uk/Biographies/";
 	private static String whole_site ="http://www-history.mcs.st-and.ac.uk/";
 	Pattern filters = Pattern.compile(".*(\\.(css|js|bmp|gif|jpeg" + "|png|tiff?|mid|mp2|mp3|mp4"
-			+ "|wav|avi|mov|mpeg|ram|m4v|ico|pdf" + "|rm|smil|wmv|swf|wma|zip|rar|gz))$");
+			+ "|wav|avi|mov|mpeg|ram|m4v|ico|spdf" + "|rm|smil|wmv|swf|wma|zip|rar|gz))$");
 
 	CrawlDataManagement myCrawlDataManager;
 
-	public ContinuousCrawler() {
+	public MathsBioContinuousCrawler() {
 		myCrawlDataManager = new CrawlDataManagement();
 	}
 
@@ -147,24 +147,6 @@ public class ContinuousCrawler extends WebCrawler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	protected void handlePageStatusCode(WebURL webUrl, int statusCode, String statusDescription) {
-		String url = webUrl.getURL();
-		MathematicianURLinfo info =myCrawlDataManager.getCrawledContent().get(url);
-		if (info == null){
-			info =new MathematicianURLinfo();
-		}	
-		info.setStatus_code(statusCode);
-		myCrawlDataManager.getCrawledContent().put(url,info);
-		//		if (statusCode != HttpStatus.SC_OK) {
-		//			if (statusCode == HttpStatus.SC_NOT_FOUND) {
-		//				System.out.println("Broken link: " + webUrl.getURL() + ", this link was found in page with docid: " + webUrl.getParentDocid());
-		//			} else {
-		//				System.out.println("Non success status for link: " + webUrl.getURL() + ", status code: " + statusCode + ", description: " + statusDescription);
-		//			}
-		//		}
 	}
 
 	public void saveData(){

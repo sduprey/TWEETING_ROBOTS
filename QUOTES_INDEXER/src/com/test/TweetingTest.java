@@ -12,7 +12,9 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class TweetingTest {
 	public static void main(String[] args) {
-		String toUpdate = "I am a wise man and I'll distill to you my knowledge, day by day.";
+		//String toUpdate = "I am a wise man and I'll distill to you my knowledge, day by day.";
+		String toUpdate = "The question is,“ said Humpty Dumpty, „which is to be master  that's all. “Lewis Carroll„";
+
 		if (args.length < 1) {
 			System.out.println("Usage: java twitter4j.examples.tweets.UpdateStatus [text]");
 			System.out.println("As you didn't provide a string, we'll use : "+toUpdate);

@@ -1,21 +1,21 @@
 package com.crawl;
 
 import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.urlutilities.QuoteURL_Utilities;
+
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
 
-public class ContinuousCrawler extends WebCrawler {
+public class QuotesContinuousCrawler extends WebCrawler {
 	// size of the local data cache
 	private static int bulk_size = 100;
 	private static int counter=0;
@@ -27,7 +27,7 @@ public class ContinuousCrawler extends WebCrawler {
 
 	CrawlDataManagement myCrawlDataManager;
 
-	public ContinuousCrawler() {
+	public QuotesContinuousCrawler() {
 		myCrawlDataManager = new CrawlDataManagement();
 	}
 
@@ -43,13 +43,9 @@ public class ContinuousCrawler extends WebCrawler {
 		System.out.println(url);
 		if (url.startsWith(quotes_author)){
 			System.out.println(Thread.currentThread()+": Visiting URL : "+url);
-			QuoteInfo info =myCrawlDataManager.getCrawledContent().get(url);
-			if (info == null){
-				info =new QuoteInfo();
-			}		
-			info.setUrl(url);
-			info.setDepth((int)page.getWebURL().getDepth());
-			myCrawlDataManager.incProcessedPages();	
+
+		    String author = QuoteURL_Utilities.getAuthor(url);
+
 
 			List<WebURL> links = null;
 
@@ -59,47 +55,29 @@ public class ContinuousCrawler extends WebCrawler {
 				String html = htmlParseData.getHtml();
 				// parsing here our html to get the content we wish to have
 				org.jsoup.nodes.Document doc =  Jsoup.parse(html);
-				Elements topoel = doc.select("p");
-				
-			
-				StringBuilder textBuilder = new StringBuilder();
-				for (Element paraph : topoel){
-					Elements texParaph = paraph.getElementsByAttribute("align");
-					textBuilder.append(texParaph.text());
-				}
-				info.setText(textBuilder.toString());
-				System.out.println(textBuilder.toString());
-				Elements dates = doc.select("h3");
-				if (dates.size() == 1){
-					Element date = dates.get(0);
-					Elements fontElements = date.getElementsByAttribute("color");
-					Element birthElement = fontElements.get(0);
-					String birthText = birthElement.text();
-					System.out.println(birthText);
-					Element deathElement = fontElements.get(1);
-					String deathText = deathElement.text();
-	
+				Elements paragraphs = doc.select("p");
+				for (Element paragraph : paragraphs){
+					Elements quotes = paragraph.getElementsByAttribute("itemprop");
+					if (quotes != null){
+						String toAdd = quotes.text();
 
-					Elements titleel = doc.select("title");
-					info.setTitle(titleel.text());
-					info.setShort_description(titleel.text());
-					// fetching the H1 element
-					Elements h1el = doc.select("h1");
-					info.setH1(h1el.text());
-					info.setName(h1el.text());
+						if (!"".equals(toAdd)) {			
+							QuoteInfo infoquote = new QuoteInfo();
+							infoquote.setName(author);
+							infoquote.setUrl(url);
+							infoquote.setText(toAdd);
+							myCrawlDataManager.getCrawledContent().add(infoquote);
+							myCrawlDataManager.incProcessedPages();	
+						}
+					}
 				}
-
 				links = htmlParseData.getOutgoingUrls();
 				myCrawlDataManager.incTotalLinks(links.size());
 				myCrawlDataManager.incTotalTextSize(htmlParseData.getText().length());	
 
-				Set<String> filtered_links = filter_out_links(links);
-				info.setLinks_size(filtered_links.size());
-				info.setOut_links(filtered_links.toString());
 
 			}
 
-			myCrawlDataManager.getCrawledContent().put(url,info);
 			counter++;
 			System.out.println("Adding URL : "+url + " to the cache");
 			System.out.println("The cache has now  : "+counter + " elements ");
@@ -111,17 +89,7 @@ public class ContinuousCrawler extends WebCrawler {
 		}
 	}
 
-	public Set<String> filter_out_links(List<WebURL> links){
-		Set<String> outputSet = new HashSet<String>();
-		for (WebURL url_out : links){
-			if ((shouldVisit(url_out)) && (getMyController().getRobotstxtServer().allows(url_out))){
-				if (url_out.getURL().startsWith(quotes_author)){
-					outputSet.add(url_out.getURL());
-				}
-			}
-		}
-		return outputSet;
-	}
+
 
 	// This function is called by controller to get the local data of this
 	// crawler when job is finished
@@ -141,24 +109,6 @@ public class ContinuousCrawler extends WebCrawler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	protected void handlePageStatusCode(WebURL webUrl, int statusCode, String statusDescription) {
-		String url = webUrl.getURL();
-		QuoteInfo info =myCrawlDataManager.getCrawledContent().get(url);
-		if (info == null){
-			info =new QuoteInfo();
-		}	
-		info.setStatus_code(statusCode);
-		myCrawlDataManager.getCrawledContent().put(url,info);
-		//		if (statusCode != HttpStatus.SC_OK) {
-		//			if (statusCode == HttpStatus.SC_NOT_FOUND) {
-		//				System.out.println("Broken link: " + webUrl.getURL() + ", this link was found in page with docid: " + webUrl.getParentDocid());
-		//			} else {
-		//				System.out.println("Non success status for link: " + webUrl.getURL() + ", status code: " + statusCode + ", description: " + statusDescription);
-		//			}
-		//		}
 	}
 
 	public void saveData(){

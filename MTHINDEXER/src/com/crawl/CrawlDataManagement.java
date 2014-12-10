@@ -150,7 +150,7 @@ public class CrawlDataManagement {
 			int local_counter = 0;
 			if (it.hasNext()){
 				local_counter++;
-				con.setAutoCommit(false);
+				//con.setAutoCommit(false);
 				PreparedStatement st = con.prepareStatement(insert_statement);
 				do {
 					local_counter ++;
@@ -186,10 +186,12 @@ public class CrawlDataManagement {
 					st.setString(9,info.getDeath_location());
 					java.sql.Date deathDate = new java.sql.Date(info.getBirth_date().getTime());
 					st.setDate(10,deathDate);
-					st.addBatch();
+					st.executeUpdate();
+					//st.addBatch();
+					System.out.println(Thread.currentThread()+"Committed " + url + " update");
 				}while (it.hasNext());	
-				st.executeBatch();		 
-				con.commit();
+				//st.executeBatch();		 
+				//con.commit();
 				System.out.println(Thread.currentThread()+"Committed " + local_counter + " updates");
 			}
 		} catch (SQLException e){

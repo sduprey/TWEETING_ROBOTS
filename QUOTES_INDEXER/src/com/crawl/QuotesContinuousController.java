@@ -8,7 +8,7 @@ import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
-public class ContinuousController {
+public class QuotesContinuousController {
 	public static void main(String[] args) throws Exception {
 		System.setProperty("http.agent","");
 		System.out.println("Starting the crawl configuration");
@@ -34,7 +34,7 @@ public class ContinuousController {
 		config.setMaxDepthOfCrawling(maxDepthOfCrawling);
 		// we want the crawl not to be reconfigurable : too slow otherwise
 		config.setResumableCrawling(false);
-		config.setPolitenessDelay(1000);
+		config.setPolitenessDelay(500);
 		PageFetcher pageFetcher = new PageFetcher(config);
 		RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
 		robotstxtConfig.setUserAgentName(user_agent_name);
@@ -45,7 +45,7 @@ public class ContinuousController {
 		controller.addSeed(seed);
 		System.out.println("Starting the crawl");
 		long startTime = System.currentTimeMillis();
-		controller.start(ContinuousCrawler.class, numberOfCrawlers);
+		controller.start(QuotesContinuousCrawler.class, numberOfCrawlers);
 		long estimatedTime = System.currentTimeMillis() - startTime;
 		List<Object> crawlersLocalData = controller.getCrawlersLocalData();
 		long totalLinks = 0;

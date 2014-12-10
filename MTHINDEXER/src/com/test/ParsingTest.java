@@ -6,16 +6,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.crawl.DeathBirthInfo;
-import com.urlutilities.MathURL_Utilities;
-
 public class ParsingTest {
 	public static void main(String[] args){
 
-//		String my_url_to_fetch ="http://www-history.mcs.st-andrews.ac.uk/Biographies/Turing.html";		
-		String my_url_to_fetch ="http://www-history.mcs.st-andrews.ac.uk/Biographies/Al-Karaji.html";
-		//String my_url_to_fetch ="http://www-history.mcs.st-and.ac.uk/Biographies/Archimedes.html";
-		
+		String my_url_to_fetch ="http://www.worldofquotes.com/author/Albert+Einstein/13/index.html";
 		// fetching data using jQuery
 		org.jsoup.nodes.Document doc;
 		try{
@@ -36,10 +30,9 @@ public class ParsingTest {
 				System.out.println(birthText);
 				Element deathElement = fontElements.get(1);
 				String deathText = deathElement.text();
-				DeathBirthInfo birthInfo = MathURL_Utilities.parseBirthDeathInformation(birthText,deathText);
-				System.out.println(birthInfo);
+
 			}
-			
+
 
 		}
 		catch (IOException e) {

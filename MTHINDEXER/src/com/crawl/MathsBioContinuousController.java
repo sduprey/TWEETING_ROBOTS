@@ -8,7 +8,7 @@ import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
-public class ContinuousController {
+public class MathsBioContinuousController {
 	public static void main(String[] args) throws Exception {
 		System.setProperty("http.agent","");
 		System.out.println("Starting the crawl configuration");
@@ -47,7 +47,7 @@ public class ContinuousController {
 		controller.addSeed(seed);
 		System.out.println("Starting the crawl");
 		long startTime = System.currentTimeMillis();
-		controller.start(ContinuousCrawler.class, numberOfCrawlers);
+		controller.start(MathsBioContinuousCrawler.class, numberOfCrawlers);
 		long estimatedTime = System.currentTimeMillis() - startTime;
 		List<Object> crawlersLocalData = controller.getCrawlersLocalData();
 		long totalLinks = 0;
