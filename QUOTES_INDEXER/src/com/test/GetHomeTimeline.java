@@ -16,7 +16,7 @@ public class GetHomeTimeline {
 	 */
 	public static void main(String[] args) {
 
-		String credential_path = "/home/sduprey/My_Data/My_Twitter_Conf/twitter4j_davidhilbert.properties";
+		String credential_path = "/home/sduprey/My_Data/My_Twitter_Conf/twitter4j_wiseman.properties";
 
 		Properties props = new Properties();
 		FileInputStream in = null;      

@@ -10,8 +10,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.urlutilities.MathURL_Utilities;
-
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
@@ -22,8 +20,8 @@ public class ContinuousCrawler extends WebCrawler {
 	private static int bulk_size = 100;
 	private static int counter=0;
 
-	private static String mathematician_biography= "http://www-history.mcs.st-and.ac.uk/Biographies/";
-	private static String whole_site ="http://www-history.mcs.st-and.ac.uk/";
+	private static String quotes_author= "http://www.worldofquotes.com/author/";
+	private static String whole_site ="http://www.worldofquotes.com/";
 	Pattern filters = Pattern.compile(".*(\\.(css|js|bmp|gif|jpeg" + "|png|tiff?|mid|mp2|mp3|mp4"
 			+ "|wav|avi|mov|mpeg|ram|m4v|ico|pdf" + "|rm|smil|wmv|swf|wma|zip|rar|gz))$");
 
@@ -43,11 +41,11 @@ public class ContinuousCrawler extends WebCrawler {
 	public void visit(Page page) {
 		String url = page.getWebURL().getURL();
 		System.out.println(url);
-		if (url.startsWith(mathematician_biography)){
+		if (url.startsWith(quotes_author)){
 			System.out.println(Thread.currentThread()+": Visiting URL : "+url);
-			MathematicianURLinfo info =myCrawlDataManager.getCrawledContent().get(url);
+			QuoteInfo info =myCrawlDataManager.getCrawledContent().get(url);
 			if (info == null){
-				info =new MathematicianURLinfo();
+				info =new QuoteInfo();
 			}		
 			info.setUrl(url);
 			info.setDepth((int)page.getWebURL().getDepth());
@@ -80,11 +78,7 @@ public class ContinuousCrawler extends WebCrawler {
 					System.out.println(birthText);
 					Element deathElement = fontElements.get(1);
 					String deathText = deathElement.text();
-					DeathBirthInfo birthdeathInfo = MathURL_Utilities.parseBirthDeathInformation(birthText,deathText);
-					info.setBirth_date(birthdeathInfo.getBirthDate());
-					info.setDeath_date(birthdeathInfo.getDeathDate());
-					info.setBirth_location(birthdeathInfo.getBirthLocation());
-					info.setDeath_location(birthdeathInfo.getDeathLocation());
+	
 
 					Elements titleel = doc.select("title");
 					info.setTitle(titleel.text());
@@ -121,7 +115,7 @@ public class ContinuousCrawler extends WebCrawler {
 		Set<String> outputSet = new HashSet<String>();
 		for (WebURL url_out : links){
 			if ((shouldVisit(url_out)) && (getMyController().getRobotstxtServer().allows(url_out))){
-				if (url_out.getURL().startsWith(mathematician_biography)){
+				if (url_out.getURL().startsWith(quotes_author)){
 					outputSet.add(url_out.getURL());
 				}
 			}
@@ -152,9 +146,9 @@ public class ContinuousCrawler extends WebCrawler {
 	@Override
 	protected void handlePageStatusCode(WebURL webUrl, int statusCode, String statusDescription) {
 		String url = webUrl.getURL();
-		MathematicianURLinfo info =myCrawlDataManager.getCrawledContent().get(url);
+		QuoteInfo info =myCrawlDataManager.getCrawledContent().get(url);
 		if (info == null){
-			info =new MathematicianURLinfo();
+			info =new QuoteInfo();
 		}	
 		info.setStatus_code(statusCode);
 		myCrawlDataManager.getCrawledContent().put(url,info);

@@ -12,11 +12,9 @@ public class ContinuousController {
 	public static void main(String[] args) throws Exception {
 		System.setProperty("http.agent","");
 		System.out.println("Starting the crawl configuration");
-		// general seed
-		String seed = "http://www-history.mcs.st-and.ac.uk/";	
+		// general see
+		String seed = "http://www.worldofquotes.com/author/index.html";	
 		// localized seed for debugging
-	    //String seed = "http://www-history.mcs.st-andrews.ac.uk/Biographies/Turing.html";
-		//String seed = "http://www-history.mcs.st-and.ac.uk/Biographies/Durell.html";
 		// downsizing to test
 		int numberOfCrawlers =  1;	
 		//int numberOfCrawlers =  250;
@@ -24,7 +22,7 @@ public class ContinuousController {
 			seed = args[0];
 			numberOfCrawlers=Integer.valueOf(args[1]);
 		} 
-		String rootFolder = "/home/sduprey/My_Data/My_MathSearch_Crawl4j";
+		String rootFolder = "/home/sduprey/My_Data/My_QuotesSearch_Crawl4j";
 		int maxDepthOfCrawling = 200;
 		String user_agent_name ="Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB;     rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13 (.NET CLR 3.5.30729)";
 		CrawlConfig config = new CrawlConfig();

@@ -12,12 +12,12 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class TweetingTest {
 	public static void main(String[] args) {
-		String toUpdate = "That may seem strange, but I am the very first great worldwide known mathematician to open a twitter account";
+		String toUpdate = "I am a wise man and I'll distill to you my knowledge, day by day.";
 		if (args.length < 1) {
 			System.out.println("Usage: java twitter4j.examples.tweets.UpdateStatus [text]");
 			System.out.println("As you didn't provide a string, we'll use : "+toUpdate);
 		}
-		String credential_path = "/home/sduprey/My_Data/My_Twitter_Conf/twitter4j_davidhilbert.properties";
+		String credential_path = "/home/sduprey/My_Data/My_Twitter_Conf/twitter4j_wiseman.properties";
 		Properties props = new Properties();
 		FileInputStream in = null;      
 		try {

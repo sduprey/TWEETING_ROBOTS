@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.crawl.MathematicianURLinfo;
+import com.crawl.QuoteInfo;
 
 public class DailyTweeter {
 	
@@ -22,7 +22,7 @@ public class DailyTweeter {
 
 	private static Connection con;
 
-	private static List<MathematicianURLinfo> mathematicians_to_tweet = new ArrayList<MathematicianURLinfo>();
+	private static List<QuoteInfo> mathematicians_to_tweet = new ArrayList<QuoteInfo>();
 	
 	public static void main(String[] args){
 		try {
@@ -50,7 +50,7 @@ public class DailyTweeter {
 		ResultSet rs = pst.executeQuery();
 		while (rs.next()) {
 			//url, whole_text, title, short_description, h1, name, birth_location, birth_date, death_location, death_date
-			MathematicianURLinfo result = new MathematicianURLinfo();
+			QuoteInfo result = new QuoteInfo();
 			String url = rs.getString(1);
 			String whole_text = rs.getString(2);
 			String title = rs.getString(3);
