@@ -112,23 +112,6 @@ public class MathsBioCrawlDataManagement {
 					String url=pairs.getKey();
 					MathematicianURLinfo info = pairs.getValue();
 					PreparedStatement st = con.prepareStatement(insert_statement);
-					//					String prepared_string = "("+url+","
-					//					                            +(String)list_values[0]+","
-					//					                            +(String)list_values[1]+","
-					//             					                +(String)list_values[1]+","
-					//             					                +(int)list_values[2]+","
-					//					                            +(String)list_values[3]+","
-					//             					                +(String)list_values[4]+","
-					//             					                +(String)list_values[5]+","
-					//					                            +(String)list_values[6]+","
-					//             					                +(String)list_values[7]+","
-					//             					                +(String)list_values[8]+","
-					//					                            +(String)list_values[9]+","
-					//             					                +(int)list_values[10]+","
-					//               					                +(int)list_values[11]+","
-					//   					                            +(String)list_values[12]+")";
-				
-					//MATHS_BIO(URL,WHOLE_TEXT,TITLE,SHORT_DESCRIPTION,H1,NAME,BIRTH_LOCATION,BIRTH_DATE,DEATH_LOCATION,DEATH_DATE)"
 					st.setString(1,url);
 					st.setString(2,info.getText());
 					st.setString(3,info.getTitle());
