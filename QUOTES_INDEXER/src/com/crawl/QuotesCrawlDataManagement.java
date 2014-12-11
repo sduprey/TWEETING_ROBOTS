@@ -1,13 +1,17 @@
 package com.crawl;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 public class QuotesCrawlDataManagement {
+	private static String database_con_path = "/home/sduprey/My_Data/My_Postgre_Conf/quotes_indexer.properties";
 
 	private static int twitter_threshold=140;
 	private int totalProcessedPages;
@@ -21,31 +25,29 @@ public class QuotesCrawlDataManagement {
 			+ " VALUES(?)";
 
 	public QuotesCrawlDataManagement() {
-		//		Properties props = new Properties();
-		//		FileInputStream in = null;      
-		//		try {
-		//			in = new FileInputStream("database.properties");
-		//			props.load(in);
-		//		} catch (IOException ex) {
-		//			Logger lgr = Logger.getLogger(BenchmarkingController.class.getName());
-		//			lgr.log(Level.FATAL, ex.getMessage(), ex);
-		//		} finally {
-		//			try {
-		//				if (in != null) {
-		//					in.close();
-		//				}
-		//			} catch (IOException ex) {
-		//				Logger lgr = Logger.getLogger(BenchmarkingController.class.getName());
-		//				lgr.log(Level.FATAL, ex.getMessage(), ex);
-		//			}
-		//		}
+		// Reading the property of our database
+		Properties props = new Properties();
+		FileInputStream in = null;      
+		try {
+			in = new FileInputStream(database_con_path);
+			props.load(in);
+		} catch (IOException ex) {
+			System.out.println("Trouble fetching database configuration");
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (in != null) {
+					in.close();
+				}
+			} catch (IOException ex) {
+				System.out.println("Trouble fetching database configuration");
+				ex.printStackTrace();
+			}
+		}
 		// the following properties have been identified
-		//		String url = props.getProperty("db.url");
-		//		String user = props.getProperty("db.user");
-		//		String passwd = props.getProperty("db.passwd");
-		String url="jdbc:postgresql://localhost/QUOTESDB";
-		String user="postgres";
-		String passwd="mogette";
+		String url = props.getProperty("db.url");
+		String user = props.getProperty("db.user");
+		String passwd = props.getProperty("db.passwd");
 
 		try{
 			con = DriverManager.getConnection(url, user, passwd);

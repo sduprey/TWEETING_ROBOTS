@@ -19,39 +19,36 @@ public class QuotesDailyTweeter {
 
 	//david.hilbert.de@gmail.com @davidhilbert_de
 	//wise.man.quoting@gmail.com @wiseman_quoting
+	private static String database_con_path = "/home/sduprey/My_Data/My_Postgre_Conf/quotes_indexer.properties";
 
-	//SELECT ... WHERE to_char(contact.dob, 'MMDD') between '0615' and '0630'...
-	//SELECT * from  MATHS_BIO where to_char(MATHS_BIO.birth_date, 'MM') = '12' and to_char(MATHS_BIO.birth_date, 'DD') = '19'
 	private static String random_quotes_selecting_string ="select * from QUOTES order by random() limit 1";
 	private static Connection con;
 	private static String  credential_path = "/home/sduprey/My_Data/My_Twitter_Conf/twitter4j_wiseman.properties";
 
 	public static void main(String[] args){
-		//		Properties props = new Properties();
-		//		FileInputStream in = null;      
-		//		try {
-		//			in = new FileInputStream("database.properties");
-		//			props.load(in);
-		//		} catch (IOException ex) {
-		//			Logger lgr = Logger.getLogger(BenchmarkingController.class.getName());
-		//			lgr.log(Level.FATAL, ex.getMessage(), ex);
-		//		} finally {
-		//			try {
-		//				if (in != null) {
-		//					in.close();
-		//				}
-		//			} catch (IOException ex) {
-		//				Logger lgr = Logger.getLogger(BenchmarkingController.class.getName());
-		//				lgr.log(Level.FATAL, ex.getMessage(), ex);
-		//			}
-		//		}
+		// Reading the property of our database
+		Properties props = new Properties();
+		FileInputStream in = null;      
+		try {
+			in = new FileInputStream(database_con_path);
+			props.load(in);
+		} catch (IOException ex) {
+			System.out.println("Trouble fetching database configuration");
+			ex.printStackTrace();
+		} finally {
+			try {
+				if (in != null) {
+					in.close();
+				}
+			} catch (IOException ex) {
+				System.out.println("Trouble fetching database configuration");
+				ex.printStackTrace();
+			}
+		}
 		// the following properties have been identified
-		//		String url = props.getProperty("db.url");
-		//		String user = props.getProperty("db.user");
-		//		String passwd = props.getProperty("db.passwd");
-		String url="jdbc:postgresql://localhost/QUOTESDB";
-		String user="postgres";
-		String passwd="mogette";
+		String url = props.getProperty("db.url");
+		String user = props.getProperty("db.user");
+		String passwd = props.getProperty("db.passwd");
 		String quote = "";
 		try{
 			con = DriverManager.getConnection(url, user, passwd);
