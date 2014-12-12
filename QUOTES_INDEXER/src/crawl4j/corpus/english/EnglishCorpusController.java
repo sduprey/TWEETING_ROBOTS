@@ -1,4 +1,4 @@
-package crawl4j.corpus.wikipedia.fr;
+package crawl4j.corpus.english;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
-public class WikipediaFRCorpusController {
+public class EnglishCorpusController {
 
-	public static String crawler_seed = "https://fr.wikipedia.org/wiki/";
+	public static String crawler_seed = "http://www.amazon.com/";
 	
 	public static void main(String[] args) throws Exception {
 		System.setProperty("http.agent", "");
@@ -25,7 +25,7 @@ public class WikipediaFRCorpusController {
 			seed = args[0];
 			numberOfCrawlers=Integer.valueOf(args[1]);
 		} 
-		String rootFolder = "/home/sduprey/My_Data/My_Corpus_Crawl4j";
+		String rootFolder = "/home/sduprey/My_Data/My_English_Corpus_Crawl4j";
 		int maxDepthOfCrawling = 200;
 		String user_agent_name ="Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB;     rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13 (.NET CLR 3.5.30729)";
 		CrawlConfig config = new CrawlConfig();
@@ -55,7 +55,7 @@ public class WikipediaFRCorpusController {
 		long totalTextSize = 0;
 		int totalProcessedPages = 0;
 		for (Object localData : crawlersLocalData) {
-			WikipediaFRCorpusCrawlDataManagement stat = (WikipediaFRCorpusCrawlDataManagement) localData;
+			EnglishCorpusCrawlDataManagement stat = (EnglishCorpusCrawlDataManagement) localData;
 			totalTextSize += stat.getTotalTextSize();
 			totalProcessedPages += stat.getTotalProcessedPages();
 		}

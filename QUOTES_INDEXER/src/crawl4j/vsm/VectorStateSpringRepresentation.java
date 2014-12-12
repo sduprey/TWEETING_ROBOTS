@@ -14,7 +14,7 @@ public class VectorStateSpringRepresentation {
 	private HashMap<String, Integer>  wordFrequencies =  new HashMap<String, Integer>() ;
 	private static StandardAnalyzer analyzer;
 	private  static File stop_words;
-	private static String stopword_path = "/home/sduprey/My_Data/My_Semantics_Data/stopwords_fr.txt";
+	private static String stopword_path = "/home/sduprey/My_Data/My_Semantics_Data/stopwords_en.txt";
 
 	static{
 		try{

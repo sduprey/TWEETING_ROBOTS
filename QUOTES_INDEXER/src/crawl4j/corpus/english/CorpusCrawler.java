@@ -1,4 +1,4 @@
-package crawl4j.corpus.wikipedia.fr;
+package crawl4j.corpus.english;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -23,16 +23,16 @@ public class CorpusCrawler extends WebCrawler {
 	Pattern filters = Pattern.compile(".*(\\.(css|js|bmp|gif|jpeg" + "|png|tiff?|mid|mp2|mp3|mp4"
 			+ "|wav|avi|mov|mpeg|ram|m4v|ico|pdf" + "|rm|smil|wmv|swf|wma|zip|rar|gz))$");
 
-	WikipediaFRCorpusCrawlDataManagement myCrawlDataManager;
+	EnglishCorpusCrawlDataManagement myCrawlDataManager;
 
 	public CorpusCrawler() {
-		myCrawlDataManager = new WikipediaFRCorpusCrawlDataManagement();
+		myCrawlDataManager = new EnglishCorpusCrawlDataManagement();
 	}
 
 	@Override
 	public boolean shouldVisit(WebURL url) {
 		String href = url.getURL().toLowerCase();
-		return !filters.matcher(href).matches() && href.startsWith(WikipediaFRCorpusController.crawler_seed);
+		return !filters.matcher(href).matches() && href.startsWith(EnglishCorpusController.crawler_seed);
 	}
 
 	@Override
@@ -58,10 +58,10 @@ public class CorpusCrawler extends WebCrawler {
 				String word=pairs.getKey();
 				// we here don't want any number
 				if (!word.matches(".*\\d+.*")){
-					word=word.replace("l'", "");
-					word=word.replace("n'", "");
-					word=word.replace("d'", "");
-					word=word.replace("m'", "");
+//					word=word.replace("l'", "");
+//					word=word.replace("n'", "");
+//					word=word.replace("d'", "");
+//					word=word.replace("m'", "");
 					System.out.println("Word to add to the corpus : "+word);
 					myCrawlDataManager.updateWord(word, url);
 				}

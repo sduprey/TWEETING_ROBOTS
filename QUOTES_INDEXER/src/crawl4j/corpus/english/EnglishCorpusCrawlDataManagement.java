@@ -1,4 +1,4 @@
-package crawl4j.corpus.wikipedia.fr;
+package crawl4j.corpus.english;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,16 +11,16 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-public class WikipediaFRCorpusCrawlDataManagement {
-	private static String database_con_path = "/home/sduprey/My_Data/My_Postgre_Conf/crawler4j.properties";
+public class EnglishCorpusCrawlDataManagement {
+	private static String database_con_path = "/home/sduprey/My_Data/My_Postgre_Conf/english_corpus.properties";
 	private Connection con;
-	private static String find_statement="select DOC_LIST from CORPUS_WORDS where WORD=?";
-	private static String insert_statement="INSERT INTO CORPUS_WORDS(WORD,NB_DOCUMENTS,DOC_LIST) values(?,?,?)";
-	private static String update_statement="UPDATE CORPUS_WORDS SET NB_DOCUMENTS=?,DOC_LIST=? WHERE WORD=?";
+	private static String find_statement="select DOC_LIST from ENGLISH_CORPUS_WORDS where WORD=?";
+	private static String insert_statement="INSERT INTO ENGLISH_CORPUS_WORDS(WORD,NB_DOCUMENTS,DOC_LIST) values(?,?,?)";
+	private static String update_statement="UPDATE ENGLISH_CORPUS_WORDS SET NB_DOCUMENTS=?,DOC_LIST=? WHERE WORD=?";
 	private int totalProcessedPages;
 	private long totalTextSize;
 
-	public WikipediaFRCorpusCrawlDataManagement() {
+	public EnglishCorpusCrawlDataManagement() {
 		// Reading the property of our database
 		Properties props = new Properties();
 		FileInputStream in = null;      
