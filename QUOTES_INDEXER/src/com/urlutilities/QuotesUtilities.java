@@ -87,26 +87,24 @@ public class QuotesUtilities {
 		List<RankingItem> rankingList = new ArrayList<RankingItem>();
 
 		for (Status status : statuses) {
-			String incomingTwittingText = status.getText();
-			QuotesInfo relevantQuote = QuotesUtilities.findMostPertinentQuote(incomingTwittingText);
-			RankingItem item = new RankingItem();
-			item.setQuoteInfos(relevantQuote);
-			item.setTwittingStatus(status);
-			item.setAdequation(relevantQuote.getAdequation());
-			rankingList.add(item);
-			System.out.println("@" + status.getUser().getScreenName() + " - " + incomingTwittingText);
-			System.out.println("Relevant quote : " + relevantQuote.getQuotes()+" and adequation : "+relevantQuote.getAdequation());
+			System.out.println(status.getUser().getScreenName());
+			if(!"wiseman_quoting".equals(status.getUser().getScreenName())){
+				String incomingTwittingText = status.getText();
+				QuotesInfo relevantQuote = QuotesUtilities.findMostPertinentQuote(incomingTwittingText);
+				RankingItem item = new RankingItem();
+				item.setQuoteInfos(relevantQuote);
+				item.setTwittingStatus(status);
+				item.setAdequation(relevantQuote.getAdequation());
+				rankingList.add(item);
+				System.out.println("@" + status.getUser().getScreenName() + " - " + incomingTwittingText);
+				System.out.println("Relevant quote : " + relevantQuote.getQuotes()+" and adequation : "+relevantQuote.getAdequation());
+			}
 		}
 		Collections.sort(rankingList);
 		Collections.reverse(rankingList);
 		if (rankingList.size() > 0){
 			RankingItem bestItem = rankingList.get(0);
-			if(bestItem.getAdequation() >= 0.5){
-				return bestItem;
-			} else {
-				return null;
-			}
-
+			return bestItem;
 		} else {
 			return null;
 		}

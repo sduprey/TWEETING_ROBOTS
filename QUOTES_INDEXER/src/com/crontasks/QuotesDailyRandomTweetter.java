@@ -15,7 +15,7 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
-public class QuotesDailyRandomTwitter {
+public class QuotesDailyRandomTweetter {
 
 	//david.hilbert.de@gmail.com @davidhilbert_de
 	//wise.man.quoting@gmail.com @wiseman_quoting

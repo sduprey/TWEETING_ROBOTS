@@ -9,12 +9,13 @@ import twitter4j.TwitterException;
 import twitter4j.User;
 
 import com.factory.AccountTwitterFactory;
+import com.urlutilities.QuotesInfo;
 import com.urlutilities.QuotesUtilities;
 import com.urlutilities.RankingItem;
 
 import crawl4j.vsm.CorpusCache;
 
-public class QuotesDailyRetwitter {
+public class QuotesDailyRetweetting {
 
 	public static void main(String[] args){
 		// initializing all the caches, quotes, semantics corpus
@@ -39,11 +40,12 @@ public class QuotesDailyRetwitter {
 			RankingItem winningItem = QuotesUtilities.checkingHomeTimeLineForRelevantQuotes(statuses);
 			if (winningItem != null){
 				System.out.println("Best ranking item to be twitted");
-				System.out.println("@" + winningItem.getTwittingStatus().getUser().getScreenName() + " - " + winningItem.getTwittingStatus().getText());
-				System.out.println("Relevant quote : " + winningItem.getQuoteInfos().getQuotes()+" and adequation : "+winningItem.getAdequation());
-				// retweeting the tweet
-	            twitter.retweetStatus(winningItem.getTwittingStatus().getId());
-	            System.out.println("Successfully retweeted status [" + args[0] + "].");
+				Status winningStatus = winningItem.getTwittingStatus();
+				QuotesInfo relevantQuote = winningItem.getQuoteInfos();
+				System.out.println("@" + winningStatus.getUser().getScreenName() + " - " + winningStatus.getText());
+				System.out.println("Relevant quote : " + relevantQuote.getQuotes()+" and adequation : "+winningItem.getAdequation());
+				// retweeting the tweet		
+	            twitter.retweetStatus(winningStatus.getId());
 			}
 		} catch (TwitterException te) {
 			te.printStackTrace();
