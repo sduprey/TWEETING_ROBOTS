@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
+import twitter4j.Status;
 import crawl4j.vsm.CorpusCache;
 
 public class QuotesUtilities {
@@ -71,17 +72,46 @@ public class QuotesUtilities {
 			System.out.println("Adding to the cache author number :"+counter + " : " +info.getAuthor());
 		}
 	}
-	
+
 	public static QuotesInfo parseQuote(String twitterQuote) {
 		QuotesInfo info = new QuotesInfo();
 		String quote = twitterQuote.substring(twitterQuote.indexOf("\"")+1, twitterQuote.lastIndexOf("\""));
-        String author = twitterQuote.substring(twitterQuote.lastIndexOf("\"")+1,twitterQuote.length());
+		String author = twitterQuote.substring(twitterQuote.lastIndexOf("\"")+1,twitterQuote.length());
 		info.setAuthor(author);
 		info.setQuotes(quote);	
 		info.setWholeTwitterQuotes(twitterQuote);
 		return info;
 	}
-	
+
+	public static RankingItem checkingHomeTimeLineForRelevantQuotes(List<Status> statuses){
+		List<RankingItem> rankingList = new ArrayList<RankingItem>();
+
+		for (Status status : statuses) {
+			String incomingTwittingText = status.getText();
+			QuotesInfo relevantQuote = QuotesUtilities.findMostPertinentQuote(incomingTwittingText);
+			RankingItem item = new RankingItem();
+			item.setQuoteInfos(relevantQuote);
+			item.setTwittingStatus(status);
+			item.setAdequation(relevantQuote.getAdequation());
+			rankingList.add(item);
+			System.out.println("@" + status.getUser().getScreenName() + " - " + incomingTwittingText);
+			System.out.println("Relevant quote : " + relevantQuote.getQuotes()+" and adequation : "+relevantQuote.getAdequation());
+		}
+		Collections.sort(rankingList);
+		Collections.reverse(rankingList);
+		if (rankingList.size() > 0){
+			RankingItem bestItem = rankingList.get(0);
+			if(bestItem.getAdequation() >= 0.5){
+				return bestItem;
+			} else {
+				return null;
+			}
+
+		} else {
+			return null;
+		}
+	}
+
 	public static QuotesInfo findMostPertinentQuote(String incoming_tweet){
 		for (QuotesInfo info : cached_quotes){
 			Double adequation =CorpusCache.computeTFSIDFimilarity(info.getQuotes(), incoming_tweet);
@@ -91,7 +121,7 @@ public class QuotesUtilities {
 		Collections.reverse(cached_quotes);
 		return cached_quotes.get(0);
 	}
-	
+
 
 	public static String getAuthor(String url){
 		String name = "";

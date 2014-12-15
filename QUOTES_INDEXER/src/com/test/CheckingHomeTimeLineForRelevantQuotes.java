@@ -9,8 +9,8 @@ import twitter4j.TwitterException;
 import twitter4j.User;
 
 import com.factory.AccountTwitterFactory;
-import com.urlutilities.QuotesInfo;
 import com.urlutilities.QuotesUtilities;
+import com.urlutilities.RankingItem;
 
 import crawl4j.vsm.CorpusCache;
 
@@ -29,24 +29,23 @@ public class CheckingHomeTimeLineForRelevantQuotes {
 			e.printStackTrace();
 			System.out.println("Trouble getting all quotes cache : either with the database itself or with the database being badly filled");
 		}
-		
-        try {
-            // gets Twitter instance with default credentials
+
+		try {
+			// gets Twitter instance with default credentials
 			Twitter twitter = AccountTwitterFactory.getWiseManTwitter();
-            User user = twitter.verifyCredentials();
-            List<Status> statuses = twitter.getHomeTimeline();
-            System.out.println("Showing @" + user.getScreenName() + "'s home timeline.");
-            for (Status status : statuses) {
-            	String incomingTwittingText = status.getText();
-                System.out.println("@" + status.getUser().getScreenName() + " - " + incomingTwittingText);
-    			QuotesInfo relevantQuote = QuotesUtilities.findMostPertinentQuote(incomingTwittingText);
-    			System.out.println("Twitting incoming : " + incomingTwittingText);
-    			System.out.println("Relevant quote : " + relevantQuote.getQuotes() + relevantQuote.getAdequation());
-            }
-        } catch (TwitterException te) {
-            te.printStackTrace();
-            System.out.println("Failed to get timeline: " + te.getMessage());
-            System.exit(-1);
-        }
+			User user = twitter.verifyCredentials();
+			List<Status> statuses = twitter.getHomeTimeline();
+			System.out.println("Showing @" + user.getScreenName() + "'s home timeline.");
+			RankingItem winningItem = QuotesUtilities.checkingHomeTimeLineForRelevantQuotes(statuses);
+			if (winningItem != null){
+				System.out.println("Best ranking item to be twitted");
+				System.out.println("@" + winningItem.getTwittingStatus().getUser().getScreenName() + " - " + winningItem.getTwittingStatus().getText());
+				System.out.println("Relevant quote : " + winningItem.getQuoteInfos().getQuotes()+" and adequation : "+winningItem.getAdequation());
+			}
+		} catch (TwitterException te) {
+			te.printStackTrace();
+			System.out.println("Failed to get timeline: " + te.getMessage());
+			System.exit(-1);
+		}
 	}
 }
