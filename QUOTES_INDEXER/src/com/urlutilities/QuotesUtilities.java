@@ -82,19 +82,14 @@ public class QuotesUtilities {
 		return info;
 	}
 	
-	public static String findMostPertinentQuote(String incoming_tweet){
+	public static QuotesInfo findMostPertinentQuote(String incoming_tweet){
 		for (QuotesInfo info : cached_quotes){
 			Double adequation =CorpusCache.computeTFSIDFimilarity(info.getQuotes(), incoming_tweet);
 			info.setAdequation(adequation);
 		}
 		Collections.sort(cached_quotes);
 		Collections.reverse(cached_quotes);
-		
-		for (QuotesInfo computed_info : cached_quotes){
-			Double adequation = computed_info.getAdequation();
-			System.out.println(computed_info.getQuotes() + " adequation : " + adequation);
-		}
-		return null;
+		return cached_quotes.get(0);
 	}
 	
 

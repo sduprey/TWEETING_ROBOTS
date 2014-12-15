@@ -66,7 +66,7 @@ public class CorpusCache {
 				counter++;
 				String word = rs.getString(1);
 				int nb_document = rs.getInt(2);
-				Double idf = Math.log10(nb_total_documents/nb_document);
+				Double idf = Math.log10((double)nb_total_documents/(double)nb_document);
 				corpus_idf.put(word, idf);
 				System.out.println("Appending "+counter+" word "+word + " with idf : " +idf);
 			}	
@@ -79,9 +79,9 @@ public class CorpusCache {
 	public static Double getIDF(String word){
 		Double idf = corpus_idf.get(word);
 		if (idf == null){
-			System.out.println("Warning Warning Warning the word is not in the corpus for word : "+word);
-			System.out.println("We act as if it were found just once for word : "+word);
-			idf = (new Double(1))/nb_total_documents;
+//			System.out.println("Warning Warning Warning the word is not in the corpus for word : "+word);
+//			System.out.println("We act as if it were found just once for word : "+word);
+			idf = (new Double(1))/(double)nb_total_documents;
 		}
 		return idf;
 	}
@@ -120,6 +120,7 @@ public class CorpusCache {
 		for (String k : both) sclar += v1.get(k) * v2.get(k);
 		for (String k : v1.keySet()) norm1 += v1.get(k) * v1.get(k);
 		for (String k : v2.keySet()) norm2 += v2.get(k) * v2.get(k);
+		if (sclar == 0 ) return 0;
 		return sclar / Math.sqrt(norm1 * norm2);
 	}
 
