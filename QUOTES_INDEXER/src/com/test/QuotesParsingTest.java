@@ -8,7 +8,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.urlutilities.QuoteURL_Utilities;
+import com.urlutilities.QuotesUtilities;
 
 public class QuotesParsingTest {
 	public static void main(String[] args){
@@ -25,7 +25,7 @@ public class QuotesParsingTest {
 					.ignoreHttpErrors(true)
 					.timeout(0)
 					.get();
-			String author = QuoteURL_Utilities.getAuthor(my_url_to_fetch);
+			String author = QuotesUtilities.getAuthor(my_url_to_fetch);
 			System.out.println(author);
 			List<String> quotesList = new ArrayList<String>();
 			Elements paragraphs = doc.select("p");

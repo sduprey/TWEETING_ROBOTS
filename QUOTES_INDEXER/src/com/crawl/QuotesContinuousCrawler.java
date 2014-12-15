@@ -8,7 +8,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.urlutilities.QuoteURL_Utilities;
+import com.urlutilities.QuotesUtilities;
 
 import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
@@ -43,7 +43,7 @@ public class QuotesContinuousCrawler extends WebCrawler {
 		System.out.println(url);
 		if (url.startsWith(quotes_author)){
 			System.out.println(Thread.currentThread()+": Visiting URL : "+url);
-			String author = QuoteURL_Utilities.getAuthor(url);
+			String author = QuotesUtilities.getAuthor(url);
 			List<WebURL> links = null;
 			if ((page.getParseData() instanceof HtmlParseData)&& (author.length() > 1)) {
 				HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();

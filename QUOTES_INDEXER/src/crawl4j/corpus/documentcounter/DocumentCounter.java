@@ -12,10 +12,10 @@ import java.util.Properties;
 import java.util.Set;
 
 public class DocumentCounter {
-	private static String database_con_path = "/home/sduprey/My_Data/My_Postgre_Conf/crawler4j.properties";
+	private static String database_con_path = "/home/sduprey/My_Data/My_Postgre_Conf/english_corpus.properties";
 
-	private static String select_statement="select DOC_LIST from CORPUS_WORDS";
-	private static String update_statement ="UPDATE CORPUS_WORDS_METADATA SET NB_TOTAL_DOCUMENTS=? WHERE THEMA='TOTAL_NUMBER_DOCUMENTS'";
+	private static String select_statement="select DOC_LIST from ENGLISH_CORPUS_WORDS";
+	private static String update_statement ="UPDATE ENGLISH_CORPUS_WORDS_METADATA SET NB_TOTAL_DOCUMENTS=? WHERE THEMA='TOTAL_NUMBER_DOCUMENTS'";
 
 	private static Set<String> documents_set = new HashSet<String>();
 	private static Connection con; 

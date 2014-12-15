@@ -15,9 +15,9 @@ import java.util.Properties;
 import java.util.Set;
 
 public class CorpusCache {
-	private static String database_con_path = "/home/sduprey/My_Data/My_Postgre_Conf/crawler4j.properties";
-	private static String select_totalcount_statement="select nb_total_documents from CORPUS_WORDS_METADATA where thema='TOTAL_NUMBER_DOCUMENTS'";
-	private static String select_word_statement="select word, nb_documents from CORPUS_WORDS";
+	private static String database_con_path = "/home/sduprey/My_Data/My_Postgre_Conf/quotes_indexer.properties";
+	private static String select_totalcount_statement="select nb_total_documents from ENGLISH_CORPUS_WORDS_METADATA where thema='TOTAL_NUMBER_DOCUMENTS'";
+	private static String select_word_statement="select word, nb_documents from ENGLISH_CORPUS_WORDS";
 
 	private static Map<String, Double> corpus_idf = new HashMap<String, Double>();
 	private static int nb_total_documents = 1;
