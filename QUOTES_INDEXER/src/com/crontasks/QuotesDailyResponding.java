@@ -3,6 +3,7 @@ package com.crontasks;
 import java.sql.SQLException;
 import java.util.List;
 
+import twitter4j.MediaEntity;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
@@ -51,6 +52,14 @@ public class QuotesDailyResponding {
 					System.out.println("Best ranking item to be twitted");
 					StatusUpdate stat= new StatusUpdate(replyingString);
 					stat.setInReplyToStatusId(winningStatus.getId());
+					MediaEntity[] entities = winningStatus.getMediaEntities();
+					if(entities.length > 0){
+						long[] mediaIds = new long[entities.length];
+						for (int i=0;i<entities.length;i++){
+							mediaIds[i]=entities[i].getId();
+						}
+						stat.setMediaIds(mediaIds);
+					}
 					twitter.updateStatus(stat);
 				}
 			}
@@ -60,5 +69,4 @@ public class QuotesDailyResponding {
 			System.exit(-1);
 		}
 	}
-
 }
