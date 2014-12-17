@@ -47,7 +47,7 @@ public class QuotesDailyResponding {
 				System.out.println("@" + winningStatus.getUser().getScreenName() + " - " + winningStatus.getText());
 				System.out.println("Relevant quote : " + relevantQuote.getQuotes()+" and adequation : "+winningItem.getAdequation());
 				// responding to the tweet
-				String replyingString = "cc@" + winningStatus.getUser().getScreenName() + " " +relevantQuote.getWholeTwitterQuotes();
+				String replyingString = "cc @" + winningStatus.getUser().getScreenName() + " " +relevantQuote.getWholeTwitterQuotes();
 				if (replyingString.length() <=retweetLimit){ 
 					System.out.println("Best ranking item to be twitted");
 					StatusUpdate stat= new StatusUpdate(replyingString);
