@@ -8,21 +8,21 @@ sudo crontab -e  # ======> to edit the root crontab
 
 00 10 * * * sudo /usr/bin/php /var/www/html/cron.php 1>/home/sduprey/My_Data/My_Serposcope_Cron_Logs/serposcope.log 2>&1
 # we launch it every day at eigth am
-00 08 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
-30 08 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_quote_twitter.jar 1>/tmp/twitter.log 2>&1
-00 09 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
-30 09 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_retweeting_twitter.jar 1>/tmp/twitter.log 2>&1
-00 10 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
-30 10 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_quote_twitter.jar 1>/tmp/twitter.log 2>&1
-00 11 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
-30 11 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_retweeting_twitter.jar 1>/tmp/twitter.log 2>&1
-00 12 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
-30 12 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_quote_twitter.jar 1>/tmp/twitter.log 2>&1
-00 14 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
-30 14 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_retweeting_twitter.jar 1>/tmp/twitter.log 2>&1
-00 16 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
-30 16 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_quote_twitter.jar 1>/tmp/twitter.log 2>&1
-00 18 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
-30 18 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_retweeting_twitter.jar 1>/tmp/twitter.log 2>&1
-00 20 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
-00 21 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_quote_twitter.jar 1>/tmp/twitter.log 2>&1
+04 08 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
+35 08 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_quote_twitter.jar 1>/tmp/twitter.log 2>&1
+06 09 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
+32 09 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_retweeting_twitter.jar 1>/tmp/twitter.log 2>&1
+07 10 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
+34 10 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_quote_twitter.jar 1>/tmp/twitter.log 2>&1
+09 11 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
+32 11 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_retweeting_twitter.jar 1>/tmp/twitter.log 2>&1
+12 12 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
+38 12 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_quote_twitter.jar 1>/tmp/twitter.log 2>&1
+01 14 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
+31 14 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_retweeting_twitter.jar 1>/tmp/twitter.log 2>&1
+09 16 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
+36 16 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_quote_twitter.jar 1>/tmp/twitter.log 2>&1
+05 18 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
+34 18 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_retweeting_twitter.jar 1>/tmp/twitter.log 2>&1
+03 20 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_responding_twitter.jar 1>/tmp/twitter.log 2>&1
+02 21 * * * sudo java -jar /home/sduprey/My_Executable/my_daily_quote_twitter.jar 1>/tmp/twitter.log 2>&1
