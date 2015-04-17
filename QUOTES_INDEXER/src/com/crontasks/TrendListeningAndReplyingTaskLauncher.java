@@ -26,8 +26,8 @@ import crawl4j.vsm.CorpusCache;
 
 public class TrendListeningAndReplyingTaskLauncher {
 
-	private static int nb_request_max = 23 ;
-	private static int delayed_seconds = 3600;
+	private static int nb_request_max = 80 ;
+	private static int delayed_seconds = 1000;
 	//private static int delayed_seconds = 30;
 
 	private static int nb_tweets = 0;
