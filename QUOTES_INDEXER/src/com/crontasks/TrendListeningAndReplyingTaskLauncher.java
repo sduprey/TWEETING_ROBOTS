@@ -31,7 +31,7 @@ public class TrendListeningAndReplyingTaskLauncher {
 	//private static int delayed_seconds = 30;
 
 	private static int nb_tweets = 0;
-	private static int max_size = 3000;
+	private static int max_size = 500;
 	private static Set<String> trendingKeywords = new HashSet<String>();
 	//private static  List<Status> pertinentTweets = new ArrayList<Status>();
 	private static  Map<Integer, Status> pertinentTweets = new  ConcurrentHashMap<Integer, Status>();
