@@ -85,10 +85,13 @@ public class QuotesUtilities {
 
 	public static RankingItem checkingHomeTimeLineForRelevantQuotes(List<Status> statuses){
 		List<RankingItem> rankingList = new ArrayList<RankingItem>();
-
+        int counter = 0;
+        int size =statuses.size();
 		for (Status status : statuses) {
+			counter++;
 			System.out.println(status.getUser().getScreenName());
 			if(!"wiseman_quoting".equals(status.getUser().getScreenName())){
+				System.out.println("Status number : "+counter+" over "+size);
 				String incomingTwittingText = status.getText();
 				QuotesInfo relevantQuote = QuotesUtilities.findMostPertinentQuote(incomingTwittingText);
 				RankingItem item = new RankingItem();

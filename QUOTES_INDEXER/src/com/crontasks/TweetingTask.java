@@ -36,43 +36,42 @@ public class TweetingTask extends TimerTask {
 		while (cat_counter_it.hasNext()) {
 			Map.Entry<Integer,Status> pairs = (Map.Entry<Integer,Status>)cat_counter_it.next();
 			// we are here just interested by our argument naming
-			Integer category_name =pairs.getKey();
 			Status status = pairs.getValue();
 			statuses_to_check.add(status);
 		}
 
-
-		RankingItem winningItem = QuotesUtilities.checkingHomeTimeLineForRelevantQuotes(statuses_to_check);
-		if (winningItem != null){
-			Twitter twitter = AccountTwitterFactory.getWiseManTwitter();
-			Status winningStatus = winningItem.getTwittingStatus();
-			QuotesInfo relevantQuote = winningItem.getQuoteInfos();
-			System.out.println("@" + winningStatus.getUser().getScreenName() + " - " + winningStatus.getText());
-			System.out.println("Relevant quote : " + relevantQuote.getQuotes()+" and adequation : "+winningItem.getAdequation());
-			// responding to the tweet
-			String replyingString = ".@" + winningStatus.getUser().getScreenName() + " " +relevantQuote.getWholeTwitterQuotes();
-			if (replyingString.length() <=retweetLimit){ 
-				System.out.println("Best ranking item to be twitted");
-				StatusUpdate stat= new StatusUpdate(replyingString);
-				stat.setInReplyToStatusId(winningStatus.getId());
-				MediaEntity[] entities = winningStatus.getMediaEntities();
-				if(entities.length > 0){
-					long[] mediaIds = new long[entities.length];
-					for (int i=0;i<entities.length;i++){
-						mediaIds[i]=entities[i].getId();
+		if (statuses_to_check.size()>0){
+			RankingItem winningItem = QuotesUtilities.checkingHomeTimeLineForRelevantQuotes(statuses_to_check);
+			if (winningItem != null){
+				Twitter twitter = AccountTwitterFactory.getWiseManTwitter();
+				Status winningStatus = winningItem.getTwittingStatus();
+				QuotesInfo relevantQuote = winningItem.getQuoteInfos();
+				System.out.println("@" + winningStatus.getUser().getScreenName() + " - " + winningStatus.getText());
+				System.out.println("Relevant quote : " + relevantQuote.getQuotes()+" and adequation : "+winningItem.getAdequation());
+				// responding to the tweet
+				String replyingString = ".@" + winningStatus.getUser().getScreenName() + " " +relevantQuote.getWholeTwitterQuotes();
+				if (replyingString.length() <=retweetLimit){ 
+					System.out.println("Best ranking item to be twitted");
+					StatusUpdate stat= new StatusUpdate(replyingString);
+					stat.setInReplyToStatusId(winningStatus.getId());
+					MediaEntity[] entities = winningStatus.getMediaEntities();
+					if(entities.length > 0){
+						long[] mediaIds = new long[entities.length];
+						for (int i=0;i<entities.length;i++){
+							mediaIds[i]=entities[i].getId();
+						}
+						stat.setMediaIds(mediaIds);
 					}
-					stat.setMediaIds(mediaIds);
-				}
-				try {
-					twitter.updateStatus(stat);
-				} catch (TwitterException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					System.out.println("Trouble sending the tweet "+stat);
+					try {
+						twitter.updateStatus(stat);
+					} catch (TwitterException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						System.out.println("Trouble sending the tweet "+stat);
+					}
 				}
 			}
 		}
-
 	}
 
 	public Set<String> getTrendingKeywords() {

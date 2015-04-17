@@ -1,5 +1,6 @@
 package com.crontasks;
 
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -19,15 +20,18 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterStream;
 
 import com.factory.AccountTwitterFactory;
+import com.urlutilities.QuotesUtilities;
+
+import crawl4j.vsm.CorpusCache;
 
 public class TrendListeningAndReplyingTaskLauncher {
 
 	private static int nb_request_max = 23 ;
 	private static int delayed_seconds = 3600;
-	//private static int delayed_seconds = 10;
+	//private static int delayed_seconds = 30;
 
 	private static int nb_tweets = 0;
-	private static int max_size = 100000;
+	private static int max_size = 3000;
 	private static Set<String> trendingKeywords = new HashSet<String>();
 	//private static  List<Status> pertinentTweets = new ArrayList<Status>();
 	private static  Map<Integer, Status> pertinentTweets = new  ConcurrentHashMap<Integer, Status>();
@@ -35,6 +39,19 @@ public class TrendListeningAndReplyingTaskLauncher {
 //	private static  List<Status> pertinentTweets = Collections.synchronizedList(new ArrayList<Status>());
 
 	public static void main(String args[]) {
+		// initializing all the caches, quotes, semantics corpus
+		try {
+			// loading the semantics english corpus to compute tf idf
+			CorpusCache.load();
+			// loading the quotes cache
+			QuotesUtilities.fillUpQuotesCache();
+			// browsing to find the most pertinent quote
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Trouble getting all quotes cache : either with the database itself or with the database being badly filled");
+		}
 		System.out.println("Finding the Worldwide biggest trends");
 		try {
 			Twitter twitter = AccountTwitterFactory.getWiseManTwitter();
